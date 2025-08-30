@@ -1,0 +1,5 @@
+{
+  "name": "BKG-Web: Decentralized LLM Orchestrator",
+  "description": "A web-based dashboard for managing decentralized AI/LLM projects, including model submission, code review, a marketplace, and a blockchain-based governance and reward system.",
+  "requestFramePermissions": []
+}
