@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { MOCK_PROJECTS } from '../constants';
+import { MOCK_PROJECTS, MOCK_JOBS } from '../constants';
 import { Project } from '../types';
 import ProjectCard from '../components/ProjectCard';
 import CreateProjectModal from '../components/CreateProjectModal';
 import ProjectStatusChart from '../components/ProjectStatusChart';
+import JobQueue from '../components/JobQueue';
 
 const Dashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>(MOCK_PROJECTS);
@@ -45,22 +46,8 @@ const Dashboard: React.FC = () => {
           <div className="lg:col-span-2">
             <ProjectStatusChart projects={projects} />
           </div>
-          <div className="lg:col-span-3 bg-gray-800/50 rounded-lg p-6 border border-gray-700/50">
-            <h3 className="text-xl font-bold text-white mb-4">Laufende Prozesse</h3>
-            <ul className="space-y-3 text-gray-300">
-              <li className="flex items-center justify-between p-3 bg-gray-800 rounded-md">
-                <span>Code-Überprüfung für Commit #e5f6g7</span>
-                <span className="text-yellow-400">In Bearbeitung</span>
-              </li>
-              <li className="flex items-center justify-between p-3 bg-gray-800 rounded-md">
-                <span>LLM-Validierung für 'GameFi LLM Core'</span>
-                <span className="text-yellow-400">In Bearbeitung</span>
-              </li>
-              <li className="flex items-center justify-between p-3 bg-gray-800 rounded-md">
-                <span>Modell 'Zephyr-12B' aktiv im Netzwerk</span>
-                <span className="text-green-400">Aktiv</span>
-              </li>
-            </ul>
+          <div className="lg:col-span-3">
+            <JobQueue jobs={MOCK_JOBS} />
           </div>
         </div>
       </div>

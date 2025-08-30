@@ -34,7 +34,6 @@ const CodeReviewer: React.FC<CodeReviewerProps> = ({ language }) => {
       .split('\n')
       .map((line, index) => {
         if (line.startsWith('**') && line.endsWith('**')) {
-          // FIX: Replace `replaceAll` with `replace` and a global regex for wider compatibility.
           return <h4 key={index} className="text-lg font-semibold text-purple-300 mt-4 mb-2">{line.replace(/\*\*/g, '')}</h4>;
         }
         if (line.startsWith('* ')) {

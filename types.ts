@@ -92,3 +92,20 @@ export interface ApiKey {
   key: string;
   createdDate: string;
 }
+
+export enum JobStatus {
+  Queued = 'In Warteschlange',
+  InProgress = 'In Bearbeitung',
+  Completed = 'Abgeschlossen',
+  Failed = 'Fehlgeschlagen',
+}
+
+export interface Job {
+  id: string;
+  description: string;
+  projectId: string;
+  projectName: string;
+  status: JobStatus;
+  submittedAt: string;
+  progress: number;
+}

@@ -1,4 +1,4 @@
-import { Project, ProjectStatus, Model, LeaderboardEntry, CodeSubmission, CodeSubmissionStatus, Transaction, Notification, NotificationType, Proposal, ProposalStatus } from './types';
+import { Project, ProjectStatus, Model, LeaderboardEntry, CodeSubmission, CodeSubmissionStatus, Transaction, Notification, NotificationType, Proposal, ProposalStatus, Job, JobStatus } from './types';
 import React from 'react';
 
 export const MOCK_PROJECTS: Project[] = [
@@ -54,6 +54,15 @@ export const MOCK_PROPOSALS: Proposal[] = [
   { id: 'prop-4', title: 'Update Staking Rewards Distribution', proposer: '0x1234...abcd', status: ProposalStatus.Executed, votesFor: 32000, votesAgainst: 500, endDate: '2024-06-30' },
 ];
 
+export const MOCK_JOBS: Job[] = [
+  { id: 'job-1', description: "Code-Überprüfung für Commit #e5f6g7", projectId: 'proj-002', projectName: 'Supply Chain Optimizer', status: JobStatus.InProgress, submittedAt: 'vor 2 Minuten', progress: 65 },
+  { id: 'job-2', description: "LLM-Validierung für 'GameFi LLM Core'", projectId: 'proj-003', projectName: 'GameFi LLM Core', status: JobStatus.InProgress, submittedAt: 'vor 15 Minuten', progress: 30 },
+  { id: 'job-3', description: "Modell 'Zephyr-12B' im Netzwerk bereitstellen", projectId: 'proj-001', projectName: 'Decentralized Finance AI', status: JobStatus.Queued, submittedAt: 'vor 1 Stunde', progress: 0 },
+  { id: 'job-4', description: "Sicherheitsaudit für Whitelist-Vertrag", projectId: 'proj-001', projectName: 'Decentralized Finance AI', status: JobStatus.Completed, submittedAt: 'vor 4 Stunden', progress: 100 },
+  { id: 'job-5', description: "Performance-Benchmark für 'Stable-Coder-Alpha'", projectId: 'proj-003', projectName: 'GameFi LLM Core', status: JobStatus.Failed, submittedAt: 'vor 8 Stunden', progress: 100 },
+];
+
+
 export const PROGRAMMING_LANGUAGES = ['Python', 'Go', 'Rust', 'R', 'JavaScript', 'TypeScript'];
 export const TARGET_PLATFORMS = ['Ethereum', 'Hyperledger', 'Solana', 'Private Cloud', 'Web', 'Mobile'];
 
@@ -76,5 +85,5 @@ export const ICONS = {
     upload: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>,
     filter: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>,
     copy: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>,
-    plus: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+    plus: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>,
 };

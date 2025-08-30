@@ -8,18 +8,43 @@ const SubmitCodeForm: React.FC = () => {
   const [code, setCode] = useState('');
   const [version, setVersion] = useState('');
   const [commitMessage, setCommitMessage] = useState('');
+  
+  // Upload-specific state
   const [fileName, setFileName] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setCode(event.target?.result as string);
-      };
-      reader.readAsText(file);
-    }
+    if (!file) return;
+
+    setFileName(file.name);
+    setIsUploading(true);
+    setUploadProgress(0);
+    setUploadSuccess(false);
+    setCode(''); // Clear previous code content
+
+    // Simulate upload progress
+    const interval = setInterval(() => {
+      setUploadProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setIsUploading(false);
+          setUploadSuccess(true);
+
+          // Read file content after upload is 'complete'
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            setCode(event.target?.result as string);
+          };
+          reader.readAsText(file);
+          
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 150);
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -34,9 +59,15 @@ const SubmitCodeForm: React.FC = () => {
     setVersion('');
     setCommitMessage('');
     setFileName('');
+    setUploadSuccess(false);
+    if(activeTab === 'upload') {
+        // Reset file input if it exists
+        const fileInput = document.getElementById('code-file-upload') as HTMLInputElement;
+        if(fileInput) fileInput.value = '';
+    }
   };
 
-  const isSubmitDisabled = !code.trim() || !version.trim() || !commitMessage.trim();
+  const isSubmitDisabled = !code.trim() || !version.trim() || !commitMessage.trim() || isUploading;
 
   const tabClasses = (tabName: Tab) => 
     `px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
@@ -67,22 +98,42 @@ const SubmitCodeForm: React.FC = () => {
               placeholder="Fügen Sie hier Ihren Code ein..."
             />
           ) : (
-            <div className="relative border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+            <div className="relative border-2 border-dashed border-gray-600 rounded-lg p-6 text-center flex justify-center items-center h-40">
               <input 
                 type="file" 
                 id="code-file-upload" 
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 onChange={handleFileChange}
+                disabled={isUploading}
               />
-              <div className="text-gray-400">
-                {ICONS.upload}
-                <p className="mt-2 font-semibold text-purple-400">
-                  {fileName ? 'Datei ausgewählt' : 'Klicken, um eine Datei hochzuladen'}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                   {fileName || 'Oder ziehen Sie eine Datei per Drag & Drop'}
-                </p>
-              </div>
+               {isUploading ? (
+                <div className="w-full max-w-sm">
+                  <p className="text-sm text-gray-300 mb-2 truncate">{fileName}</p>
+                  <div className="w-full bg-gray-700 rounded-full h-2.5">
+                      <div 
+                          className="bg-purple-600 h-2.5 rounded-full transition-all duration-150" 
+                          style={{ width: `${uploadProgress}%` }}
+                      ></div>
+                  </div>
+                  <p className="text-center text-xs text-gray-400 mt-2">{uploadProgress}%</p>
+                </div>
+              ) : uploadSuccess ? (
+                <div className="text-green-400 flex flex-col items-center">
+                   {React.cloneElement(ICONS.checkCircle, { className: "h-8 w-8 text-green-400" })}
+                  <p className="font-semibold mt-2">{fileName} erfolgreich hochgeladen!</p>
+                   <p className="text-xs text-gray-500">Klicken, um eine andere Datei auszuwählen.</p>
+                </div>
+              ) : (
+                <div className="text-gray-400">
+                  {ICONS.upload}
+                  <p className="mt-2 font-semibold text-purple-400">
+                    Klicken, um eine Datei hochzuladen
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Oder ziehen Sie eine Datei per Drag & Drop
+                  </p>
+                </div>
+              )}
             </div>
           )}
 

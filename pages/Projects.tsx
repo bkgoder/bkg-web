@@ -85,7 +85,7 @@ const Projects: React.FC = () => {
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-left">
-                                <thead className="bg-gray-900/40">
+                                <thead className="border-b border-gray-700">
                                     <tr>
                                         <th scope="col" className="py-3 px-6 text-sm font-semibold text-gray-400 uppercase tracking-wider">Committer</th>
                                         <th scope="col" className="py-3 px-6 text-sm font-semibold text-gray-400 uppercase tracking-wider">Hash</th>
@@ -96,10 +96,10 @@ const Projects: React.FC = () => {
                                 <tbody className="divide-y divide-gray-700/50">
                                     {MOCK_SUBMISSIONS.map((sub: CodeSubmission) => (
                                         <tr key={sub.id} className="hover:bg-gray-700/30 transition-colors duration-150">
-                                            <td className="py-4 px-6 text-gray-200">{sub.committer}</td>
-                                            <td className="py-4 px-6 font-mono text-purple-300">{sub.hash.substring(0, 8)}...</td>
-                                            <td className="py-4 px-6 text-gray-300">{sub.date}</td>
-                                            <td className="py-4 px-6">
+                                            <td className="py-4 px-6 text-gray-200 align-middle">{sub.committer}</td>
+                                            <td className="py-4 px-6 font-mono text-purple-300 whitespace-nowrap align-middle">{sub.hash.substring(0, 8)}...</td>
+                                            <td className="py-4 px-6 text-gray-300 whitespace-nowrap align-middle">{sub.date}</td>
+                                            <td className="py-4 px-6 whitespace-nowrap align-middle">
                                                 <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getSubmissionStatusClasses(sub.status)}`}>{sub.status}</span>
                                             </td>
                                         </tr>
